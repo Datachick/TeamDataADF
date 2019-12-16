@@ -45,7 +45,7 @@
 									"type": "String"
 								},
 								"sink": {
-									"path": "$['WindowEnd']"
+									"path": "$['movie']"
 								}
 							},
 							{
@@ -54,7 +54,7 @@
 									"type": "String"
 								},
 								"sink": {
-									"path": "$['CallingIMSI']"
+									"path": "$['title']"
 								}
 							},
 							{
@@ -63,7 +63,34 @@
 									"type": "String"
 								},
 								"sink": {
-									"path": "$['CallCount']"
+									"path": "$['genres']"
+								}
+							},
+							{
+								"source": {
+									"name": "year",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['year']"
+								}
+							},
+							{
+								"source": {
+									"name": "Rating",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Rating']"
+								}
+							},
+							{
+								"source": {
+									"name": "Rotton Tomato",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Rotton Tomato']"
 								}
 							}
 						]
