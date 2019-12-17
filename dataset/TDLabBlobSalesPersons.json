@@ -15,73 +15,96 @@
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
+			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
 		"schema": [
 			{
+				"name": "BusinessEntityID",
 				"type": "String"
 			},
 			{
+				"name": "Title",
 				"type": "String"
 			},
 			{
+				"name": "FirstName",
 				"type": "String"
 			},
 			{
+				"name": "MiddleName",
 				"type": "String"
 			},
 			{
+				"name": "LastName",
 				"type": "String"
 			},
 			{
+				"name": "Suffix",
 				"type": "String"
 			},
 			{
+				"name": "JobTitle",
 				"type": "String"
 			},
 			{
+				"name": "TxNUM",
 				"type": "String"
 			},
 			{
+				"name": "PhoneNumberType",
 				"type": "String"
 			},
 			{
+				"name": "EmailAddress",
 				"type": "String"
 			},
 			{
+				"name": "EmailPromotion",
 				"type": "String"
 			},
 			{
+				"name": "AddressLine1",
 				"type": "String"
 			},
 			{
+				"name": "AddressLine2",
 				"type": "String"
 			},
 			{
+				"name": "City",
 				"type": "String"
 			},
 			{
+				"name": "StateProvinceName",
 				"type": "String"
 			},
 			{
+				"name": "PostalCode",
 				"type": "String"
 			},
 			{
+				"name": "CountryRegionName",
 				"type": "String"
 			},
 			{
+				"name": "TerritoryName",
 				"type": "String"
 			},
 			{
+				"name": "TerritoryGroup",
 				"type": "String"
 			},
 			{
+				"name": "SalesQuota",
 				"type": "String"
 			},
 			{
+				"name": "SalesYTD",
 				"type": "String"
 			},
 			{
+				"name": "SalesLastYear",
 				"type": "String"
 			}
 		]
