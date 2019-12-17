@@ -1,5 +1,5 @@
 {
-	"name": "TDLabBlobFactoryFiles",
+	"name": "TDLabBlobSalesPersons",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage",
@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "Sales.vSalesPerson.txt",
 				"container": "factoryfiles"
 			},
 			"columnDelimiter": ",",
