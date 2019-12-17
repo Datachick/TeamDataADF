@@ -19,6 +19,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SQLDW'"
 		},
+		"AzureBlobStorage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage'"
+		},
 		"AzureDataLakeStorageGen2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://teamdatalabfiles.dfs.core.windows.net"
@@ -67,6 +71,19 @@
 				"type": "AzureSqlDW",
 				"typeProperties": {
 					"connectionString": "[parameters('SQLDW_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -256,126 +273,205 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SimpleCopyPipeline')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/TDLabBlobSalesPersons')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Sales.vSalesPerson.txt",
+						"container": "factoryfiles"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
 					{
-						"name": "SimpleDataCopy",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "JsonSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "JsonWriteSettings",
-									"quoteAllText": true
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "movie",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['movie']"
-										}
-									},
-									{
-										"source": {
-											"name": "title",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['title']"
-										}
-									},
-									{
-										"source": {
-											"name": "genres",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['genres']"
-										}
-									},
-									{
-										"source": {
-											"name": "year",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['year']"
-										}
-									},
-									{
-										"source": {
-											"name": "Rating",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['Rating']"
-										}
-									},
-									{
-										"source": {
-											"name": "Rotton Tomato",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['Rotton Tomato']"
-										}
-									}
-								]
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "MoviesDB",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "MoviesDB_JSON",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+						"name": "BusinessEntityID",
+						"type": "String"
+					},
+					{
+						"name": "Title",
+						"type": "String"
+					},
+					{
+						"name": "FirstName",
+						"type": "String"
+					},
+					{
+						"name": "MiddleName",
+						"type": "String"
+					},
+					{
+						"name": "LastName",
+						"type": "String"
+					},
+					{
+						"name": "Suffix",
+						"type": "String"
+					},
+					{
+						"name": "JobTitle",
+						"type": "String"
+					},
+					{
+						"name": "TxNUM",
+						"type": "String"
+					},
+					{
+						"name": "PhoneNumberType",
+						"type": "String"
+					},
+					{
+						"name": "EmailAddress",
+						"type": "String"
+					},
+					{
+						"name": "EmailPromotion",
+						"type": "String"
+					},
+					{
+						"name": "AddressLine1",
+						"type": "String"
+					},
+					{
+						"name": "AddressLine2",
+						"type": "String"
+					},
+					{
+						"name": "City",
+						"type": "String"
+					},
+					{
+						"name": "StateProvinceName",
+						"type": "String"
+					},
+					{
+						"name": "PostalCode",
+						"type": "String"
+					},
+					{
+						"name": "CountryRegionName",
+						"type": "String"
+					},
+					{
+						"name": "TerritoryName",
+						"type": "String"
+					},
+					{
+						"name": "TerritoryGroup",
+						"type": "String"
+					},
+					{
+						"name": "SalesQuota",
+						"type": "String"
+					},
+					{
+						"name": "SalesYTD",
+						"type": "String"
+					},
+					{
+						"name": "SalesLastYear",
+						"type": "String"
 					}
-				],
-				"annotations": []
+				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/MoviesDB')]",
-				"[concat(variables('factoryId'), '/datasets/MoviesDB_JSON')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SalesPersonJson')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Sales.vSalesPerson.json",
+						"container": "factoryfiles"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"BusinessEntityID": {
+							"type": "string"
+						},
+						"Title": {
+							"type": "string"
+						},
+						"FirstName": {
+							"type": "string"
+						},
+						"MiddleName": {
+							"type": "string"
+						},
+						"LastName": {
+							"type": "string"
+						},
+						"Suffix": {
+							"type": "string"
+						},
+						"JobTitle": {
+							"type": "string"
+						},
+						"TxNUM": {
+							"type": "string"
+						},
+						"PhoneNumberType": {
+							"type": "string"
+						},
+						"EmailAddress": {
+							"type": "string"
+						},
+						"EmailPromotion": {
+							"type": "string"
+						},
+						"AddressLine1": {
+							"type": "string"
+						},
+						"AddressLine2": {
+							"type": "string"
+						},
+						"City": {
+							"type": "string"
+						},
+						"StateProvinceName": {
+							"type": "string"
+						},
+						"PostalCode": {
+							"type": "string"
+						},
+						"CountryRegionName": {
+							"type": "string"
+						},
+						"TerritoryName": {
+							"type": "string"
+						},
+						"TerritoryGroup": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage')]"
 			]
 		},
 		{
@@ -549,6 +645,246 @@
 				"[concat(variables('factoryId'), '/datasets/MoviesDB')]",
 				"[concat(variables('factoryId'), '/datasets/MisMatchedRatingAvgByGenre')]",
 				"[concat(variables('factoryId'), '/datasets/MisMatchedMovies')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopySalesPersontoJSON')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "CopySalesPersonToJSONAct",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings",
+									"quoteAllText": true
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "BusinessEntityID",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['BusinessEntityID']"
+										}
+									},
+									{
+										"source": {
+											"name": "Title",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['Title']"
+										}
+									},
+									{
+										"source": {
+											"name": "FirstName",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['FirstName']"
+										}
+									},
+									{
+										"source": {
+											"name": "MiddleName",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['MiddleName']"
+										}
+									},
+									{
+										"source": {
+											"name": "LastName",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['LastName']"
+										}
+									},
+									{
+										"source": {
+											"name": "Suffix",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['Suffix']"
+										}
+									},
+									{
+										"source": {
+											"name": "JobTitle",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['JobTitle']"
+										}
+									},
+									{
+										"source": {
+											"name": "TxNUM",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['TxNUM']"
+										}
+									},
+									{
+										"source": {
+											"name": "PhoneNumberType",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['PhoneNumberType']"
+										}
+									},
+									{
+										"source": {
+											"name": "EmailAddress",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['EmailAddress']"
+										}
+									},
+									{
+										"source": {
+											"name": "EmailPromotion",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['EmailPromotion']"
+										}
+									},
+									{
+										"source": {
+											"name": "AddressLine1",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['AddressLine1']"
+										}
+									},
+									{
+										"source": {
+											"name": "AddressLine2",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['AddressLine2']"
+										}
+									},
+									{
+										"source": {
+											"name": "City",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['City']"
+										}
+									},
+									{
+										"source": {
+											"name": "StateProvinceName",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['StateProvinceName']"
+										}
+									},
+									{
+										"source": {
+											"name": "PostalCode",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['PostalCode']"
+										}
+									},
+									{
+										"source": {
+											"name": "CountryRegionName",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['CountryRegionName']"
+										}
+									},
+									{
+										"source": {
+											"name": "TerritoryName",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['TerritoryName']"
+										}
+									},
+									{
+										"source": {
+											"name": "TerritoryGroup",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['TerritoryGroup']"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "TDLabBlobSalesPersons",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SalesPersonJson",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/TDLabBlobSalesPersons')]",
+				"[concat(variables('factoryId'), '/datasets/SalesPersonJson')]"
 			]
 		},
 		{
