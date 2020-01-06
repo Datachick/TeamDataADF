@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "CopyToJSON",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -27,27 +27,193 @@
 						}
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "JsonSink",
 						"storeSettings": {
 							"type": "AzureBlobStorageWriteSettings"
 						},
 						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"type": "JsonWriteSettings",
+							"quoteAllText": true
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "RESPONDENT",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['RESPONDENT']"
+								}
+							},
+							{
+								"source": {
+									"name": "ADDRESS",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['ADDRESS']"
+								}
+							},
+							{
+								"source": {
+									"name": "SECONDARY ADDRESS",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['SECONDARY ADDRESS']"
+								}
+							},
+							{
+								"source": {
+									"name": "TERTIARY ADDRESS",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['TERTIARY ADDRESS']"
+								}
+							},
+							{
+								"source": {
+									"name": "CIRCUIT COURT CASE NUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['CIRCUIT COURT CASE NUMBER']"
+								}
+							},
+							{
+								"source": {
+									"name": "VIOLATION",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['VIOLATION']"
+								}
+							},
+							{
+								"source": {
+									"name": "COMMUNITY AREA",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['COMMUNITY AREA']"
+								}
+							},
+							{
+								"source": {
+									"name": "COMMUNITY AREA NUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['COMMUNITY AREA NUMBER']"
+								}
+							},
+							{
+								"source": {
+									"name": "WARD",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['WARD']"
+								}
+							},
+							{
+								"source": {
+									"name": "CENSUS TRACTS",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['CENSUS TRACTS']"
+								}
+							},
+							{
+								"source": {
+									"name": "CENSUS BLOCKS",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['CENSUS BLOCKS']"
+								}
+							},
+							{
+								"source": {
+									"name": "STREET BLOCK ID",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['STREET BLOCK ID']"
+								}
+							},
+							{
+								"source": {
+									"name": "PLACED ON LIST",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['PLACED ON LIST']"
+								}
+							},
+							{
+								"source": {
+									"name": "X_COORDINATE",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['X_COORDINATE']"
+								}
+							},
+							{
+								"source": {
+									"name": "Y_COORDINDATE",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Y_COORDINDATE']"
+								}
+							},
+							{
+								"source": {
+									"name": "LONGITUDE",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['LONGITUDE']"
+								}
+							},
+							{
+								"source": {
+									"name": "LATITUDE",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['LATITUDE']"
+								}
+							},
+							{
+								"source": {
+									"name": "LOCATION",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['LOCATION']"
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
-						"referenceName": "DelimitedText1",
+						"referenceName": "SxSWLeads",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DelimitedText1",
+						"referenceName": "Json1",
 						"type": "DatasetReference"
 					}
 				]
