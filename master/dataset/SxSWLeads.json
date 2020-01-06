@@ -1,5 +1,5 @@
 {
-	"name": "DelimitedText1",
+	"name": "SxSWLeads",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
