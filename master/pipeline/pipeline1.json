@@ -19,8 +19,7 @@
 						"type": "DelimitedTextSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"wildcardFileName": "*"
+							"recursive": true
 						},
 						"formatSettings": {
 							"type": "DelimitedTextReadSettings"
@@ -42,164 +41,56 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "RESPONDENT",
+									"name": "Company",
 									"type": "String"
 								},
 								"sink": {
-									"path": "$['RESPONDENT']"
+									"path": "$['Company']"
 								}
 							},
 							{
 								"source": {
-									"name": "ADDRESS",
+									"name": "Position",
 									"type": "String"
 								},
 								"sink": {
-									"path": "$['ADDRESS']"
+									"path": "$['Position']"
 								}
 							},
 							{
 								"source": {
-									"name": "SECONDARY ADDRESS",
+									"name": "Country",
 									"type": "String"
 								},
 								"sink": {
-									"path": "$['SECONDARY ADDRESS']"
+									"path": "$['Country']"
 								}
 							},
 							{
 								"source": {
-									"name": "TERTIARY ADDRESS",
+									"name": "Email Hosts",
 									"type": "String"
 								},
 								"sink": {
-									"path": "$['TERTIARY ADDRESS']"
+									"path": "$['Email Hosts']"
 								}
 							},
 							{
 								"source": {
-									"name": "CIRCUIT COURT CASE NUMBER",
+									"name": "Domain",
 									"type": "String"
 								},
 								"sink": {
-									"path": "$['CIRCUIT COURT CASE NUMBER']"
+									"path": "$['Domain']"
 								}
 							},
 							{
 								"source": {
-									"name": "VIOLATION",
+									"name": "Location 1",
 									"type": "String"
 								},
 								"sink": {
-									"path": "$['VIOLATION']"
-								}
-							},
-							{
-								"source": {
-									"name": "COMMUNITY AREA",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['COMMUNITY AREA']"
-								}
-							},
-							{
-								"source": {
-									"name": "COMMUNITY AREA NUMBER",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['COMMUNITY AREA NUMBER']"
-								}
-							},
-							{
-								"source": {
-									"name": "WARD",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['WARD']"
-								}
-							},
-							{
-								"source": {
-									"name": "CENSUS TRACTS",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['CENSUS TRACTS']"
-								}
-							},
-							{
-								"source": {
-									"name": "CENSUS BLOCKS",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['CENSUS BLOCKS']"
-								}
-							},
-							{
-								"source": {
-									"name": "STREET BLOCK ID",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['STREET BLOCK ID']"
-								}
-							},
-							{
-								"source": {
-									"name": "PLACED ON LIST",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['PLACED ON LIST']"
-								}
-							},
-							{
-								"source": {
-									"name": "X_COORDINATE",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['X_COORDINATE']"
-								}
-							},
-							{
-								"source": {
-									"name": "Y_COORDINDATE",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['Y_COORDINDATE']"
-								}
-							},
-							{
-								"source": {
-									"name": "LONGITUDE",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['LONGITUDE']"
-								}
-							},
-							{
-								"source": {
-									"name": "LATITUDE",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['LATITUDE']"
-								}
-							},
-							{
-								"source": {
-									"name": "LOCATION",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['LOCATION']"
+									"path": "$['Location 1']"
 								}
 							}
 						]
