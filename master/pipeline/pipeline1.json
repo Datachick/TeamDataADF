@@ -1,0 +1,206 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings",
+							"quoteAllText": true,
+							"filePattern": "setOfObjects"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Center",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Center']"
+								}
+							},
+							{
+								"source": {
+									"name": "Center Search Status",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Center Search Status']"
+								}
+							},
+							{
+								"source": {
+									"name": "Facility",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Facility']"
+								}
+							},
+							{
+								"source": {
+									"name": "FacilityURL",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['FacilityURL']"
+								}
+							},
+							{
+								"source": {
+									"name": "Occupied",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Occupied']"
+								}
+							},
+							{
+								"source": {
+									"name": "Status",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Status']"
+								}
+							},
+							{
+								"source": {
+									"name": "URL Link",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['URL Link']"
+								}
+							},
+							{
+								"source": {
+									"name": "Record Date",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Record Date']"
+								}
+							},
+							{
+								"source": {
+									"name": "Last Update",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Last Update']"
+								}
+							},
+							{
+								"source": {
+									"name": "Country",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Country']"
+								}
+							},
+							{
+								"source": {
+									"name": "Contact",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Contact']"
+								}
+							},
+							{
+								"source": {
+									"name": "Phone",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Phone']"
+								}
+							},
+							{
+								"source": {
+									"name": "Location",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Location']"
+								}
+							},
+							{
+								"source": {
+									"name": "City",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['City']"
+								}
+							},
+							{
+								"source": {
+									"name": "State",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['State']"
+								}
+							},
+							{
+								"source": {
+									"name": "Zipcode",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Zipcode']"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Json1",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}

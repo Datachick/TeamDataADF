@@ -1,0 +1,88 @@
+{
+	"name": "DelimitedText1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "NASA_Facilities.csv",
+				"container": "dp200"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Center",
+				"type": "String"
+			},
+			{
+				"name": "Center Search Status",
+				"type": "String"
+			},
+			{
+				"name": "Facility",
+				"type": "String"
+			},
+			{
+				"name": "FacilityURL",
+				"type": "String"
+			},
+			{
+				"name": "Occupied",
+				"type": "String"
+			},
+			{
+				"name": "Status",
+				"type": "String"
+			},
+			{
+				"name": "URL Link",
+				"type": "String"
+			},
+			{
+				"name": "Record Date",
+				"type": "String"
+			},
+			{
+				"name": "Last Update",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "Contact",
+				"type": "String"
+			},
+			{
+				"name": "Phone",
+				"type": "String"
+			},
+			{
+				"name": "Location",
+				"type": "String"
+			},
+			{
+				"name": "City",
+				"type": "String"
+			},
+			{
+				"name": "State",
+				"type": "String"
+			},
+			{
+				"name": "Zipcode",
+				"type": "String"
+			}
+		]
+	}
+}
