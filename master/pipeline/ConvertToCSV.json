@@ -1,5 +1,5 @@
 {
-	"name": "ConvertToJSON",
+	"name": "ConvertToCSV",
 	"properties": {
 		"activities": [
 			{
