@@ -11,8 +11,9 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": "MoviesDB.json",
-				"fileSystem": "teamdatacontainer"
+				"fileSystem": "movies"
 			}
-		}
+		},
+		"schema": {}
 	}
 }
