@@ -89,6 +89,29 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Avro1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorageGen2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Avro",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "movies"
+					}
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageGen2')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/MisMatchedMovies')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -306,6 +329,13 @@
 								"type": "DatasetReference"
 							},
 							"name": "MisMatchedMoviesJSON"
+						},
+						{
+							"dataset": {
+								"referenceName": "Avro1",
+								"type": "DatasetReference"
+							},
+							"name": "ByGenreAvro"
 						}
 					],
 					"transformations": [
@@ -316,14 +346,15 @@
 							"name": "MisMatchedRatingAvgByGenre"
 						}
 					],
-					"script": "source(output(\n\t\tmovie as string,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as string,\n\t\tRating as string,\n\t\t{Rotton Tomato} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> MoviesDB\nMoviesDB filter(toInteger({Rotton Tomato}) >=51 && toInteger(Rating) <=4) ~> MisMatchedRating\nMisMatchedRating aggregate(groupBy(genres),\n\tRating = avg(toInteger(Rating))) ~> MisMatchedRatingAvgByGenre\nMisMatchedRatingAvgByGenre sink(input(\n\t\tmovie as string,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as string,\n\t\tRating as string,\n\t\t{Rotton Tomato} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['MisMatchedAvgByRating'],\n\tpartitionBy('hash', 1)) ~> MisMatchedAvgByRating\nMisMatchedRating sink(input(\n\t\tmovie as string,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as string,\n\t\tRating as string,\n\t\t{Rotton Tomato} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['MisMatchedMovies.csv'],\n\tpartitionBy('hash', 1)) ~> MisMatchedMovies\nMisMatchedRating sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tsaveOrder: 1) ~> MisMatchedMoviesJSON"
+					"script": "source(output(\n\t\tmovie as string,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as string,\n\t\tRating as string,\n\t\t{Rotton Tomato} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> MoviesDB\nMoviesDB filter(toInteger({Rotton Tomato}) >=51 && toInteger(Rating) <=4) ~> MisMatchedRating\nMisMatchedRating aggregate(groupBy(genres),\n\tRating = avg(toInteger(Rating))) ~> MisMatchedRatingAvgByGenre\nMisMatchedRatingAvgByGenre sink(input(\n\t\tmovie as string,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as string,\n\t\tRating as string,\n\t\t{Rotton Tomato} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['MisMatchedAvgByRating'],\n\tpartitionBy('hash', 1)) ~> MisMatchedAvgByRating\nMisMatchedRating sink(input(\n\t\tmovie as string,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as string,\n\t\tRating as string,\n\t\t{Rotton Tomato} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['MisMatchedMovies.csv'],\n\tpartitionBy('hash', 1)) ~> MisMatchedMovies\nMisMatchedRating sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tsaveOrder: 1) ~> MisMatchedMoviesJSON\nMisMatchedRatingAvgByGenre sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tsaveOrder: 1) ~> ByGenreAvro"
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/MoviesDB')]",
 				"[concat(variables('factoryId'), '/datasets/MisMatchedRatingAvgByGenre')]",
 				"[concat(variables('factoryId'), '/datasets/MisMatchedMovies')]",
-				"[concat(variables('factoryId'), '/datasets/MoviesDB_JSON')]"
+				"[concat(variables('factoryId'), '/datasets/MoviesDB_JSON')]",
+				"[concat(variables('factoryId'), '/datasets/Avro1')]"
 			]
 		},
 		{
@@ -353,7 +384,8 @@
 									"MoviesDB": {},
 									"MisMatchedAvgByRating": {},
 									"MisMatchedMovies": {},
-									"MisMatchedMoviesJSON": {}
+									"MisMatchedMoviesJSON": {},
+									"ByGenreAvro": {}
 								}
 							},
 							"staging": {},
@@ -372,7 +404,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/EveryMinute')]",
+			"name": "[concat(parameters('factoryName'), '/Every5Minutes')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -392,7 +424,7 @@
 					"recurrence": {
 						"frequency": "Minute",
 						"interval": 1,
-						"startTime": "2021-01-20T23:36:00",
+						"startTime": "2021-01-20T14:12:00",
 						"endTime": "2021-01-21T16:36:00",
 						"timeZone": "Eastern Standard Time"
 					}
