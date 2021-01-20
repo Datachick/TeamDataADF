@@ -39,7 +39,7 @@
 						"referenceName": "Avro1",
 						"type": "DatasetReference"
 					},
-					"name": "ByGenreAvro."
+					"name": "ByGenreAvro"
 				}
 			],
 			"transformations": [
@@ -50,7 +50,7 @@
 					"name": "MisMatchedRatingAvgByGenre"
 				}
 			],
-			"script": "source(output(\n\t\tmovie as string,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as string,\n\t\tRating as string,\n\t\t{Rotton Tomato} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> MoviesDB\nMoviesDB filter(toInteger({Rotton Tomato}) >=51 && toInteger(Rating) <=4) ~> MisMatchedRating\nMisMatchedRating aggregate(groupBy(genres),\n\tRating = avg(toInteger(Rating))) ~> MisMatchedRatingAvgByGenre\nMisMatchedRatingAvgByGenre sink(input(\n\t\tmovie as string,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as string,\n\t\tRating as string,\n\t\t{Rotton Tomato} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['MisMatchedAvgByRating'],\n\tpartitionBy('hash', 1)) ~> MisMatchedAvgByRating\nMisMatchedRating sink(input(\n\t\tmovie as string,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as string,\n\t\tRating as string,\n\t\t{Rotton Tomato} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['MisMatchedMovies.csv'],\n\tpartitionBy('hash', 1)) ~> MisMatchedMovies\nMisMatchedRating sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tsaveOrder: 1) ~> MisMatchedMoviesJSON\nMisMatchedRatingAvgByGenre sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tsaveOrder: 1) ~> ByGenreAvro."
+			"script": "source(output(\n\t\tmovie as string,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as string,\n\t\tRating as string,\n\t\t{Rotton Tomato} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> MoviesDB\nMoviesDB filter(toInteger({Rotton Tomato}) >=51 && toInteger(Rating) <=4) ~> MisMatchedRating\nMisMatchedRating aggregate(groupBy(genres),\n\tRating = avg(toInteger(Rating))) ~> MisMatchedRatingAvgByGenre\nMisMatchedRatingAvgByGenre sink(input(\n\t\tmovie as string,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as string,\n\t\tRating as string,\n\t\t{Rotton Tomato} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['MisMatchedAvgByRating'],\n\tpartitionBy('hash', 1)) ~> MisMatchedAvgByRating\nMisMatchedRating sink(input(\n\t\tmovie as string,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as string,\n\t\tRating as string,\n\t\t{Rotton Tomato} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['MisMatchedMovies.csv'],\n\tpartitionBy('hash', 1)) ~> MisMatchedMovies\nMisMatchedRating sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tsaveOrder: 1) ~> MisMatchedMoviesJSON\nMisMatchedRatingAvgByGenre sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tsaveOrder: 1) ~> ByGenreAvro"
 		}
 	}
 }
