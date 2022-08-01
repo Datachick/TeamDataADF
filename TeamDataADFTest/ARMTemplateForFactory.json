@@ -341,7 +341,8 @@
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
-						"type": "AzureBlobFSLocation"
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "mismatchedmovies"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -393,8 +394,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"folderPath": "Movies",
-						"fileSystem": "factoryfiles"
+						"fileSystem": "mismatchedmovies"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
